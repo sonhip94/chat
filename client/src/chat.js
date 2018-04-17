@@ -77,7 +77,7 @@ class Chat extends Component {
               <a className="block relative" href="#">
                 <img src={user.avatar} alt={user.email} className="avatar" />
                 <span className="absolute username">
-                  { (userLocal.email === user.email) ? <span className="button button-primary">${userLocal.email}</span> : user.email }
+                  { (userLocal.email === user.email) ? <span className="button button-primary">{userLocal.email}</span> : user.email }
                 </span>
               </a>
             </li>)}
