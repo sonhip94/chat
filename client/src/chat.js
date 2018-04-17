@@ -3,6 +3,13 @@ import moment from 'moment';
 import client from './feathers';
 
 class Chat extends Component {
+    constructor(props){
+      super(props);
+      this.state={
+          userLocal: {},
+      }
+
+  }
   sendMessage(ev) {
     const input = ev.target.querySelector('[name="text"]');
     const text = input.value.trim();
@@ -14,6 +21,15 @@ class Chat extends Component {
     }
 
     ev.preventDefault();
+  }
+
+  componentWillMount() {
+    if(localStorage && localStorage.getItem('user')){
+        var user = JSON.parse(localStorage.getItem('user'));
+        this.setState({
+            userLocal:user
+        });
+    }
   }
 
   scrollToBottom() {
@@ -37,6 +53,8 @@ class Chat extends Component {
   render() {
     const { users, messages } = this.props;
 
+    const { userLocal } = this.state;
+
     return <main className="flex flex-column">
       <header className="title-bar flex flex-row flex-center">
         <div className="title-wrapper block center-element">
@@ -58,7 +76,9 @@ class Chat extends Component {
             {users.map(user => <li key={user._id}>
               <a className="block relative" href="#">
                 <img src={user.avatar} alt={user.email} className="avatar" />
-                <span className="absolute username">{user.email}</span>
+                <span className="absolute username">
+                  { (userLocal.email === user.email) ? <span className="button button-primary">${userLocal.email}</span> : user.email }
+                </span>
               </a>
             </li>)}
           </ul>

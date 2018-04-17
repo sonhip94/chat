@@ -14,6 +14,13 @@ export default class Login extends Component {
   login() {
     const { email, password } = this.state;
 
+    let user = {
+      email,
+      password
+    }
+
+    localStorage.setItem('user', JSON.stringify(user));
+
     return client.authenticate({
       strategy: 'local',
       email, password
@@ -27,7 +34,6 @@ export default class Login extends Component {
       .create({ email, password })
       .then(() => this.login());
   }
-
 
   render() {
     return <main className="login container">
